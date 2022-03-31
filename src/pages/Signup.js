@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { signup } from '../firebase/auth';
 
 
 function Signup() {
   const { register, handleSubmit, reset} = useForm();
-
+  const [isLoading, setLoading] = useState(false);
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       await signup(data);
       reset();
     } catch (error){
       console.log(error);
   }
+  setLoading(false);
+}
 
+  const formClassName = `ui form ${isLoading ? 'loading' : ''}`
   return (
     <div className="login-container">
       <div className="ui card login-card">
         <div className="content">
-          <form className="ui form" onSubmit={handleSubmit(onSubmit)}>
+          <form className={formClassName} onSubmit={handleSubmit(onSubmit)}>
             <div className="two fields">
               <div className="field">
                 <label>
