@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { signup } from '../firebase/auth';
+import { login } from '../firebase/auth';
 import {  Link  } from 'react-router-dom';
 
 
-function Signup(prop) {
+function Login(prop) {
   const { register, handleSubmit, reset} = useForm();
   const [isLoading, setLoading] = useState(false);
   const onSubmit = async (data) => {
-    let newUser;
+    let user;
 
     setLoading(true);
     try {
-      newUser = await signup(data);
+      user = await login(data);
       reset();
     } catch (error){
       console.log(error);
   }
 
-  if(newUser){
-    prop.history.push(`/profile/${newUser.uid}`)
+  if(user){
+    prop.history.push(`/profile/${user.uid}`)
   } else {
   setLoading(false);
 }
@@ -31,25 +31,7 @@ function Signup(prop) {
       <div className="ui card login-card">
         <div className="content">
           <form className={formClassName} onSubmit={handleSubmit(onSubmit)}>
-            <div className="two fields">
-              <div className="field">
-                <label>
-                  First Name
-                  <input
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    ref={register}
-                  />
-                </label>
-              </div>
-              <div className="field">
-                <label>
-                  Last Name
-                  <input type="text" name="lastName" placeholder="Last Name" ref={register}/>
-                </label>
-              </div>
-            </div>
+
             <div className="field">
               <label>
                 Email
@@ -64,11 +46,11 @@ function Signup(prop) {
             </div>
             <div className="field actions">
                 <button className="ui primary button login" type="submit">
-                Sign Up
+                Login
                 </button>
-                or
-                <Link to="/login">Log In</Link>
+                <Link to="/signup">Sign Up</Link>
             </div>
+            
           </form>
         </div>
       </div>
@@ -76,5 +58,5 @@ function Signup(prop) {
   );
 }
 
-export default Signup;
+export default Login;
 
