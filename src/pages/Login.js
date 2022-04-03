@@ -7,6 +7,9 @@ import {  Link  } from 'react-router-dom';
 function Login(prop) {
   const { register, handleSubmit, reset} = useForm();
   const [isLoading, setLoading] = useState(false);
+
+const routeOnLogin
+
   const onSubmit = async (data) => {
     let user;
 
