@@ -3,13 +3,13 @@ import {Route, Redirect } from 'react-router-dom';
 import { useSession } from '../firebase/UserProvider';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { user } = useSession();
+    const { user, isAdmin } = useSession();
 
     return (
         <Route 
         { ...rest } 
         render = {(props) => 
-            !!user && user.uid === props.match.params.id ? (
+            (!!user && user.uid === props.match.params.id) || isAdmin ? (
             <Component {...props} />
             ) : (
             <Redirect to={{pathname: `/login`, 
@@ -22,3 +22,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 );
 };
 export default PrivateRoute;
+

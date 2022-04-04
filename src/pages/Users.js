@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { firestore } from "../firebase/config";
+import { Link } from "react-router-dom";
 
 const Users = () => {
     
@@ -30,7 +31,7 @@ const Users = () => {
                         {
                             users.map(user => (
                                 <tr key={user.uid}>
-                                    <td>{user.name}</td>
+                                    <td><Link to={`/profile/${user.uid}`}>{user.name}</Link></td>
                                     <td>{user.specialty}</td>
                                     <td>{user.address} {user.city}, {user.state} {user.zip}</td>
                                     <td>{user.phone}</td>
