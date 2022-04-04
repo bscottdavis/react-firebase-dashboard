@@ -4,11 +4,21 @@ import { login } from '../firebase/auth';
 import {  Link  } from 'react-router-dom';
 
 
-function Login(prop) {
+function Login(props) {
   const { register, handleSubmit, reset} = useForm();
   const [isLoading, setLoading] = useState(false);
 
-const routeOnLogin
+  const routeOnLogin = async (user) => {
+    const token = await user.getIdTokenResult();
+    if (token.claims.admin) {
+      props.history.push('users');
+    }
+      else {
+        props.history.push(`/profile/${user.uid}`)
+      }
+  }
+
+
 
   const onSubmit = async (data) => {
     let user;
@@ -22,7 +32,7 @@ const routeOnLogin
   }
 
   if(user){
-    prop.history.push(`/profile/${user.uid}`)
+    routeOnLogin(user);
   } else {
   setLoading(false);
 }
